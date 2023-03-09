@@ -1,20 +1,56 @@
 import React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+
+import { useNavigate } from "react-router-dom";
 
 const RecipeCard = (props) => {
   const { recipe } = props;
-  const { image, title } = recipe;
+  const { id, image, title } = recipe;
+  const navigate = useNavigate();
 
   return (
-    <div className="rounded-md overflow-hidden flex flex-col drop-shadow-sm bg-white">
-      <div>
-        <img src={image} alt="" />
+    <Card /* sx={{ maxWidth: 345 }} */>
+      <CardMedia sx={{ height: 140 }} image={image} title="" />
+      <div className="grid grid-rows-cardContent p-1">
+        <CardContent>
+          <Typography gutterBottom variant="h6" component="div">
+            {title}
+          </Typography>
+        </CardContent>
+        <CardActions className="flex justify-between">
+          <Button onClick={() => navigate(`/detail/${id}`)} className="bg-primary text-black" variant="contained">
+            View more
+          </Button>
+          <div>
+            <Tooltip title="Add to favorites" placement="top">
+              <IconButton
+                className="text-secondary"
+                aria-label="add to favorites"
+              >
+                <FavoriteIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Add to calendar" placement="top">
+              <IconButton
+                className="text-secondary"
+                aria-label="add to calendar"
+              >
+                <CalendarMonthIcon />
+              </IconButton>
+            </Tooltip>
+          </div>
+        </CardActions>
       </div>
-
-      <div className="m-3 flex flex-col justify-between h-full">
-        <h4>{title}</h4>
-        <button className="bg-green-100 p-2 mt-2 rounded-md">View more</button>
-      </div>
-    </div>
+    </Card>
   );
 };
 
